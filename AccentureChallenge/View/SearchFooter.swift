@@ -23,7 +23,7 @@ class SearchFooter: UIView {
     }
     
     func configureView() {
-        backgroundColor = UIColor.candyGreen
+        //backgroundColor = UIColor.green
         alpha = 0.0
         
         // Configure label
@@ -63,10 +63,10 @@ extension SearchFooter {
         if (filteredItemCount == totalItemCount) {
             setNotFiltering()
         } else if (filteredItemCount == 0) {
-            label.text = "No items match your query"
+            label.text = "No hay películas para esa búsqueda."
             showFooter()
         } else {
-            label.text = "Filtering \(filteredItemCount) of \(totalItemCount)"
+            label.text = "Filtrando \(filteredItemCount) de \(totalItemCount)"
             showFooter()
         }
     }

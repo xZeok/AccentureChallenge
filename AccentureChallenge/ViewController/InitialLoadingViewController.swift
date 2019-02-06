@@ -7,24 +7,59 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import NotificationBannerSwift
 
-class InitialLoadingViewController: UIViewController {
+class InitialLoadingViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        
+        loadInitialData()
+        
     }
-    */
 
+    func loadInitialData() {
+
+        _ = APIManager.sharedInstance.getMovieTypes(){ isSuccess, jsonResponse in
+            
+            if isSuccess {
+                
+                var movieTypes = [MovieType]()
+                
+                for element in jsonResponse!["genres"].array! {
+                    
+                    let movieType = MovieType()
+                    movieType.id = element["id"].intValue
+                    movieType.name = element["name"].stringValue
+                    movieTypes.append(movieType)
+                    
+                }
+                
+                try! self.realm.write {
+                    
+                    self.realm.add(movieTypes, update: true)
+                    
+                }
+                
+                self.performSegue(withIdentifier: "homeSegue", sender: nil)
+                
+            } else {
+                
+                let banner = StatusBarNotificationBanner(title: "Error al cargar los datos. Intentando nuevamente...", style: .danger)
+                banner.show()
+                
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3)) {
+                    
+                    self.loadInitialData()
+                    
+                }
+            }
+        }
+    }
 }
