@@ -109,20 +109,36 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZ2-SW-ZtQ" customClass="SearchFooter" customModule="AccentureChallenge" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="574" width="375" height="44"/>
-                                <color key="backgroundColor" red="0.17413486449999999" green="0.82352941180000006" blue="0.24700401929999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEe-cI-BoB">
+                                <rect key="frame" x="229" y="561" width="130" height="45"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rLa-3Z-aZD">
+                                    <rect key="frame" x="0.0" y="0.0" width="130" height="45"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eliminar filtro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUV-kS-4h5">
+                                            <rect key="frame" x="15" y="12" width="100" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="nUV-kS-4h5" firstAttribute="centerY" secondItem="rLa-3Z-aZD" secondAttribute="centerY" id="Thu-st-PHw"/>
+                                        <constraint firstItem="nUV-kS-4h5" firstAttribute="centerX" secondItem="rLa-3Z-aZD" secondAttribute="centerX" id="ax9-eW-N5N"/>
+                                    </constraints>
+                                </view>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="S9g-zG-enL"/>
+                                    <constraint firstAttribute="width" constant="130" id="OTp-E4-Hhv"/>
+                                    <constraint firstAttribute="height" constant="45" id="xfG-tB-SM4"/>
                                 </constraints>
-                            </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="JZ2-SW-ZtQ" firstAttribute="bottom" secondItem="3DE-Qe-xXf" secondAttribute="bottom" id="6xq-nA-P9f"/>
-                            <constraint firstItem="3DE-Qe-xXf" firstAttribute="trailing" secondItem="JZ2-SW-ZtQ" secondAttribute="trailing" id="aHJ-uX-AqJ"/>
                             <constraint firstItem="S2U-DA-CY7" firstAttribute="top" secondItem="3DE-Qe-xXf" secondAttribute="top" id="avI-Nv-MSg"/>
-                            <constraint firstItem="JZ2-SW-ZtQ" firstAttribute="leading" secondItem="3DE-Qe-xXf" secondAttribute="leading" id="goq-vK-f2P"/>
+                            <constraint firstItem="3DE-Qe-xXf" firstAttribute="trailing" secondItem="ZEe-cI-BoB" secondAttribute="trailing" constant="16" id="eT2-vj-nVu"/>
+                            <constraint firstItem="3DE-Qe-xXf" firstAttribute="bottom" secondItem="ZEe-cI-BoB" secondAttribute="bottom" constant="12" id="jN6-mu-T1t"/>
                             <constraint firstItem="3DE-Qe-xXf" firstAttribute="bottom" secondItem="S2U-DA-CY7" secondAttribute="bottom" id="jc6-Le-Pm0"/>
                             <constraint firstItem="3DE-Qe-xXf" firstAttribute="trailing" secondItem="S2U-DA-CY7" secondAttribute="trailing" id="tWN-b7-SKA"/>
                             <constraint firstItem="S2U-DA-CY7" firstAttribute="leading" secondItem="3DE-Qe-xXf" secondAttribute="leading" id="uJu-Xu-awP"/>
@@ -137,6 +153,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteBlurVisualEffectView" destination="ZEe-cI-BoB" id="Ynk-3N-Zhe"/>
                         <outlet property="favoritesTableView" destination="S2U-DA-CY7" id="Tu7-Rh-jAo"/>
                     </connections>
                 </viewController>

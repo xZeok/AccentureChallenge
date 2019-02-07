@@ -28,6 +28,7 @@ class MoviesViewController: BaseViewController {
 
         moviesCollectionView.delegate = self
         moviesCollectionView.dataSource = self
+        moviesCollectionView.keyboardDismissMode = .onDrag
         
         moviesSearchBar.delegate = self
         
@@ -38,6 +39,7 @@ class MoviesViewController: BaseViewController {
         
         movies = realm.objects(Movie.self)
         filteredMovies = movies
+        moviesCollectionView.reloadData()
     }
     
 //    override func viewDidAppear(_ animated: Bool) {
@@ -48,7 +50,7 @@ class MoviesViewController: BaseViewController {
     func loadPopularMovies() {
         
         _ = APIManager.sharedInstance.getPopularMovies(page: 1){ isSuccess, jsonResponse in
-            
+       
             if isSuccess {
                 
                 let dateFormatter = DateFormatter()

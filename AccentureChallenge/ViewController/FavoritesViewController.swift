@@ -13,6 +13,7 @@ import ActionSheetPicker_3_0
 class FavoritesViewController: BaseViewController {
 
     @IBOutlet weak var favoritesTableView: UITableView!
+    @IBOutlet weak var deleteBlurVisualEffectView: UIVisualEffectView!
     
     var movies: Results<Movie>!
     var filteredMovies: [Movie]!
@@ -30,7 +31,8 @@ class FavoritesViewController: BaseViewController {
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
         
-        // Do any additional setup after loading the view.
+        let blurViewTap = UITapGestureRecognizer(target: self, action: #selector(self.blurViewTap(_:)))
+        deleteBlurVisualEffectView.addGestureRecognizer(blurViewTap)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,11 +40,20 @@ class FavoritesViewController: BaseViewController {
         movies = realm.objects(Movie.self).filter("isFavorite == true")
         filteredMovies = Array(movies)
         favoritesTableView.reloadData()
+        deleteBlurVisualEffectView.isHidden = true
+    }
+    
+    @objc func blurViewTap(_ sender: UITapGestureRecognizer) {
+        
+        deleteBlurVisualEffectView.isHidden = true
+        filteredMovies = Array(movies)
+        favoritesTableView.reloadData()
+        
     }
     
     func presentYearPicker() {
         
-        let years = Array(1990...2019)
+        let years = Array(1900...2019)
         
         let yearPicker = ActionSheetStringPicker(title: "Año", rows: years, initialSelection: years.count-1, doneBlock: { (picker, index, value) in
             
@@ -63,6 +74,7 @@ class FavoritesViewController: BaseViewController {
             
             self.filteredMovies = tempMovies
             self.favoritesTableView.reloadData()
+            self.deleteBlurVisualEffectView.isHidden = false
             
         }, cancel: nil, origin: self.view)
         
@@ -96,6 +108,7 @@ class FavoritesViewController: BaseViewController {
             
             self.filteredMovies = tempMovies
             self.favoritesTableView.reloadData()
+            self.deleteBlurVisualEffectView.isHidden = false
             
         }, cancel: nil, origin: self.view)
         
@@ -173,7 +186,16 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
                 
             }
             
-            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+            filteredMovies.remove(at: indexPath.row)
+            
+            if filteredMovies.count == 0 {
+                
+                tableView.reloadData()
+                
+            } else {
+                
+                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+            }
         }
     }
 }
