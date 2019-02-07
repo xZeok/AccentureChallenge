@@ -12,7 +12,7 @@ class Movie: Object {
     
     @objc dynamic var id: Int = -1
     @objc dynamic var name: String = ""
-    var genres = List<MovieType>()
+    var genres = List<Genre>()
     @objc dynamic var movieDescription: String = ""
     @objc dynamic var pictureURL: String = ""
     @objc dynamic var isFavorite: Bool = false

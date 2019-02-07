@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-class MovieType: Object {
+class Genre: Object {
     
     @objc dynamic var id: Int = -1
     @objc dynamic var name: String = ""

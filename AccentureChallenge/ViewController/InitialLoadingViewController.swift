@@ -30,11 +30,11 @@ class InitialLoadingViewController: BaseViewController {
             
             if isSuccess {
                 
-                var movieTypes = [MovieType]()
+                var movieTypes = [Genre]()
                 
                 for element in jsonResponse!["genres"].array! {
                     
-                    let movieType = MovieType()
+                    let movieType = Genre()
                     movieType.id = element["id"].intValue
                     movieType.name = element["name"].stringValue
                     movieTypes.append(movieType)

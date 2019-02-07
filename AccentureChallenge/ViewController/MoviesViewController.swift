@@ -21,6 +21,7 @@ class MoviesViewController: BaseViewController {
     let itemsPerRow: CGFloat = 2
     var movies: Results<Movie>!
     var filteredMovies: Results<Movie>!
+    var isFiltering = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,10 +63,10 @@ class MoviesViewController: BaseViewController {
                     movie.pictureURL = "https://image.tmdb.org/t/p/w500\(element["poster_path"].stringValue)"
                     movie.date = dateFormatter.date(from: element["release_date"].stringValue)!
                     
-                    let genres = List<MovieType>()
+                    let genres = List<Genre>()
                     for genre in element["genre_ids"].array! {
                         
-                        let movieGenre = self.realm.object(ofType: MovieType.self, forPrimaryKey: genre.intValue)
+                        let movieGenre = self.realm.object(ofType: Genre.self, forPrimaryKey: genre.intValue)
                         genres.append(movieGenre!)
                         
                     }
@@ -111,23 +112,32 @@ extension MoviesViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-       
-     
         if searchBar.text!.isEmpty {
             
             filteredMovies = movies
             searchBar.resignFirstResponder()
             searchFooter.setNotFiltering()
+            isFiltering = false
             
         } else {
             
-            
             filteredMovies = movies?.filter("name CONTAINS[c] %@", searchBar.text!).sorted(byKeyPath: "name", ascending: true)
-            
-             searchFooter.setIsFilteringToShow(filteredItemCount: filteredMovies.count, of: movies.count)
+            searchFooter.setIsFilteringToShow(filteredItemCount: filteredMovies.count, of: movies.count)
+            isFiltering = true
         }
         
         moviesCollectionView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "movieSegue" {
+            
+            let destinationViewController = segue.destination as! MovieDetailViewController
+            destinationViewController.movie = sender as! Movie
+            destinationViewController.delegate = self
+            
+        }
     }
 }
 
@@ -165,27 +175,14 @@ extension MoviesViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.movie = filteredMovies[indexPath.row]
         return cell
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "movieSegue" {
-            
-            let destinationViewController = segue.destination as! MovieDetailViewController
-            destinationViewController.movie = sender as! Movie
-            destinationViewController.delegate = self
-            
-        }
-    }
 }
 
 extension MoviesViewController : UICollectionViewDelegateFlowLayout {
-    //1
-    
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //2
+
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
@@ -193,14 +190,12 @@ extension MoviesViewController : UICollectionViewDelegateFlowLayout {
         return CGSize(width: widthPerItem-1, height: 250)
     }
     
-    //3
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return sectionInsets
     }
     
-    // 4
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {

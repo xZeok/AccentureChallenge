@@ -22,7 +22,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="ZT7-ey-6oS">
-                                    <rect key="frame" x="0.0" y="151" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="274" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
@@ -87,19 +87,55 @@
                                             <outlet property="titleLabel" destination="vYS-C6-fcU" id="mgJ-z4-xAW"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="emptyCell" rowHeight="123" id="A2O-7e-XXF">
+                                        <rect key="frame" x="0.0" y="151" width="375" height="123"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A2O-7e-XXF" id="sNO-nO-Lxh">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="122.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No hay películas." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7rY-rK-x8v">
+                                                    <rect key="frame" x="122.5" y="51" width="130" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7rY-rK-x8v" firstAttribute="centerY" secondItem="sNO-nO-Lxh" secondAttribute="centerY" id="ReS-hm-rbp"/>
+                                                <constraint firstItem="7rY-rK-x8v" firstAttribute="centerX" secondItem="sNO-nO-Lxh" secondAttribute="centerX" id="l8I-pL-cCe"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZ2-SW-ZtQ" customClass="SearchFooter" customModule="AccentureChallenge" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="574" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.17413486449999999" green="0.82352941180000006" blue="0.24700401929999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="S9g-zG-enL"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="JZ2-SW-ZtQ" firstAttribute="bottom" secondItem="3DE-Qe-xXf" secondAttribute="bottom" id="6xq-nA-P9f"/>
+                            <constraint firstItem="3DE-Qe-xXf" firstAttribute="trailing" secondItem="JZ2-SW-ZtQ" secondAttribute="trailing" id="aHJ-uX-AqJ"/>
                             <constraint firstItem="S2U-DA-CY7" firstAttribute="top" secondItem="3DE-Qe-xXf" secondAttribute="top" id="avI-Nv-MSg"/>
+                            <constraint firstItem="JZ2-SW-ZtQ" firstAttribute="leading" secondItem="3DE-Qe-xXf" secondAttribute="leading" id="goq-vK-f2P"/>
                             <constraint firstItem="3DE-Qe-xXf" firstAttribute="bottom" secondItem="S2U-DA-CY7" secondAttribute="bottom" id="jc6-Le-Pm0"/>
                             <constraint firstItem="3DE-Qe-xXf" firstAttribute="trailing" secondItem="S2U-DA-CY7" secondAttribute="trailing" id="tWN-b7-SKA"/>
                             <constraint firstItem="S2U-DA-CY7" firstAttribute="leading" secondItem="3DE-Qe-xXf" secondAttribute="leading" id="uJu-Xu-awP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3DE-Qe-xXf"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Favoritos" id="LAh-F9-04k"/>
+                    <navigationItem key="navigationItem" title="Favoritos" id="LAh-F9-04k">
+                        <barButtonItem key="rightBarButtonItem" title="Filtrar" image="icon_filter" id="pgL-Vd-Q1g">
+                            <connections>
+                                <action selector="filterTap:" destination="0p3-Mn-PjG" id="2Sz-Ui-61n"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="favoritesTableView" destination="S2U-DA-CY7" id="Tu7-Rh-jAo"/>
                     </connections>
@@ -254,7 +290,6 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wlq-6W-8WS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="I20-4o-uay" kind="relationship" relationship="viewControllers" id="Vug-ED-R1L"/>
@@ -463,6 +498,7 @@
         <image name="icon_favorite_full" width="18" height="16"/>
         <image name="icon_favorite_gray" width="17" height="16"/>
         <image name="icon_favorites" width="22" height="21"/>
+        <image name="icon_filter" width="17" height="19"/>
         <image name="icon_list" width="18" height="10"/>
         <image name="image_launchscreen" width="375" height="667"/>
     </resources>
